@@ -1,0 +1,4 @@
+**/node_modules
+**/dist
+cmd/webapp/.env
+**/.angular
