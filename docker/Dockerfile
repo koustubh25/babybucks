@@ -22,7 +22,6 @@ COPY cmd/webapp/*.go ./cmd/webapp/
 COPY internal ./internal
 COPY pkg ./pkg
 COPY go.mod go.sum ./
-COPY cmd/webapp/.env ./cmd/webapp/
 
 ### webapp ###
 WORKDIR /app/cmd/webapp
@@ -34,7 +33,6 @@ FROM alpine:3.17.2
 WORKDIR /app
 COPY --from=front /front/dist ./front/dist
 COPY --from=app /app/cmd/webapp/webapp ./webapp
-COPY --from=app /app/cmd/webapp/.env ./.env
 
 EXPOSE 3000
 ENTRYPOINT [ "./webapp" ]

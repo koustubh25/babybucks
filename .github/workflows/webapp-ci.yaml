@@ -22,11 +22,24 @@ jobs:
           version: latest
           endpoint: builders
 
+      - name: "Add Metadata"
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: koustubh/babybucks
+          flavor: |
+            latest=auto
+          tags: |
+            type=sha,
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=edge,branch=$repo.default_branch
+
       - name: Build and Push
         uses: docker/build-push-action@v4
         with:
           context: .
           file: docker/Dockerfile
           platforms: linux/amd64
-          push: false
-          tags: webapp:latest
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
